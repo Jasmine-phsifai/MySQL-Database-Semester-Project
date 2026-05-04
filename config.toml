@@ -1,0 +1,39 @@
+# 学生成绩数据库 — 运行时配置
+# 首次运行时会读取本文件; 修改后需重启 start.bat
+
+[mysql]
+host = "127.0.0.1"
+port = 3306
+user = "root"
+password = ""
+database = "student_grading"
+charset = "utf8mb4"
+pool_size = 8
+connect_timeout_sec = 5
+query_timeout_sec   = 30
+
+[security]
+# HMAC 盐 — 生产环境请改为长随机串; 改动后旧 signature 全部作废, 需要重置账户
+hmac_salt = "CHANGE-ME-IN-PRODUCTION-32-bytes-min-AAAA"
+session_ttl_hours = 8
+default_admin_username = "admin"
+default_admin_password = "admin123"
+
+[paths]
+logs_dir     = "logs"
+backups_dir  = "backups"
+data_dir     = "data"
+docs_dir     = "docs"
+runtime_dir  = "runtime"
+
+[ui]
+theme = "auto"            # auto | dark | light
+font_size = 11
+table_row_height = 26
+
+[fixtures]
+auto_seed_empty_tables = true
+sample_students  = 600
+sample_teachers  = 80
+sample_courses   = 120
+sample_semesters = 4

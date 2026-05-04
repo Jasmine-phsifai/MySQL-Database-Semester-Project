@@ -1,0 +1,2 @@
+runtime/ 目录用于放置内置 embeddable Python (M3 阶段打包时填充).
+M1 阶段开发期使用 D:\Anaconda\envs\py312\python.exe (start.bat 自动 fallback).

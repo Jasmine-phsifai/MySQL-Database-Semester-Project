@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# 内置 runtime (M3 打包用; 仅保留 .gitkeep 与 readme)
+runtime/python*.exe
+runtime/python*.zip
+runtime/python*._pth
+runtime/Lib/
+runtime/Scripts/
+runtime/DLLs/
+runtime/get-pip.py
+
+# 运行产物
+logs/*.jsonl
+logs/autosave/
+backups/*.sql
+backups/*.gz
+backups/*.zip
+data/extracted/*.csv
+data/extracted/*.txt
+
+# ER 图渲染产物 (源 .mmd 进 git, 渲染产物可重生成)
+docs/er/schema.png
+docs/er/schema.svg
+docs/er/schema_polished.png
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store

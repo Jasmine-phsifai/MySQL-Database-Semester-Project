@@ -1,0 +1,207 @@
+erDiagram
+    DEPARTMENT ||--o{ MAJOR : "开设"
+    DEPARTMENT ||--o{ TEACHER : "聘任"
+    DEPARTMENT ||--o{ COURSE  : "开课"
+    DEPARTMENT ||--o{ STUDENT : "辅修"
+
+    MAJOR ||--o{ STUDENT : "主修"
+    MAJOR ||--o{ DEGREE_REQUIREMENT : "学分要求"
+
+    COURSE ||--o{ COURSE_ALIAS : "旧代码"
+    COURSE ||--o{ COURSE_OFFERING : "实例化"
+
+    SEMESTER ||--o{ COURSE_OFFERING : "学期"
+
+    COURSE_OFFERING ||--o{ OFFERING_TEACHER : "授课"
+    TEACHER         ||--o{ OFFERING_TEACHER : "授课"
+
+    COURSE_OFFERING ||--o{ ENROLLMENT : "选课"
+    STUDENT         ||--o{ ENROLLMENT : "选课"
+
+    COURSE_OFFERING ||--o{ ENROLLMENT_ACTION : "操作"
+    STUDENT         ||--o{ ENROLLMENT_ACTION : "操作"
+
+    COURSE_OFFERING ||--o{ GRADE_BAND : "等第区间"
+    ENROLLMENT      ||--|| GRADE : "成绩"
+
+    APP_USER ||--o{ AUTH_SESSION : "会话"
+    APP_USER ||--o{ AUDIT_LOG_INDEX : "审计"
+
+    DEPARTMENT_CHANGE_NOTE {
+        bigint note_id PK
+        enum   change_type
+        varchar summary
+        date   change_date
+    }
+
+    DEPARTMENT {
+        bigint  dept_id PK
+        varchar dept_code UK
+        varchar dept_name
+        varchar office_location
+        varchar phone
+        tinyint status
+    }
+
+    MAJOR {
+        bigint  major_id PK
+        varchar major_code UK
+        varchar major_name
+        bigint  dept_id FK
+        tinyint status
+    }
+
+    DEGREE_REQUIREMENT {
+        bigint  major_id PK_FK
+        enum    degree_level PK
+        decimal required_credits
+    }
+
+    STUDENT {
+        bigint  student_id PK
+        varchar student_no UK
+        varchar name
+        varchar id_card UK
+        varchar dorm
+        varchar address
+        varchar phone
+        date    birth_date
+        enum    gender
+        smallint grade_year
+        bigint  major_id FK
+        bigint  minor_dept_id FK
+        enum    degree_level
+        tinyint status
+    }
+
+    TEACHER {
+        bigint  teacher_id PK
+        varchar staff_no UK
+        varchar name
+        bigint  dept_id FK
+        varchar title
+        tinyint status
+    }
+
+    COURSE {
+        bigint  course_id PK
+        varchar course_code UK
+        varchar course_name
+        text    description
+        smallint class_hours
+        decimal credits
+        enum    degree_level
+        bigint  dept_id FK
+        tinyint is_honor
+        tinyint allow_pnp
+        enum    grade_mode
+        tinyint status
+    }
+
+    COURSE_ALIAS {
+        bigint  alias_id PK
+        bigint  course_id FK
+        varchar old_code UK
+    }
+
+    SEMESTER {
+        bigint  semester_id PK
+        varchar name UK
+        date    start_date
+        date    end_date
+    }
+
+    COURSE_OFFERING {
+        bigint  offering_id PK
+        bigint  course_id FK
+        bigint  semester_id FK
+        varchar section_no
+        smallint capacity
+        datetime free_period_start
+        datetime free_period_end
+        datetime withdrawal_deadline
+        decimal pass_threshold
+        enum    grade_mode
+        tinyint status
+    }
+
+    OFFERING_TEACHER {
+        bigint  offering_id PK_FK
+        bigint  teacher_id  PK_FK
+        enum    role
+    }
+
+    ENROLLMENT {
+        bigint  enrollment_id PK
+        bigint  student_id FK
+        bigint  offering_id FK
+        enum    enroll_status
+        enum    enroll_mode
+        timestamp last_select_at
+        datetime  locked_at
+        datetime  withdrawn_at
+    }
+
+    ENROLLMENT_ACTION {
+        bigint  action_id PK
+        bigint  student_id FK
+        bigint  offering_id FK
+        enum    action_type
+        timestamp created_at
+    }
+
+    GRADE_BAND {
+        bigint  offering_id PK_FK
+        enum    letter PK
+        decimal score_min
+        decimal score_max
+        decimal gpa_min
+        decimal gpa_max
+    }
+
+    GRADE {
+        bigint  grade_id PK
+        bigint  enrollment_id FK_UK
+        enum    grade_mode
+        decimal score
+        enum    pnp_result
+        enum    letter_grade
+        decimal gpa
+        int     rank_in_offering
+        enum    grade_status
+        tinyint counts_credit
+        tinyint counts_gpa
+        tinyint is_resit
+    }
+
+    APP_USER {
+        bigint  user_id PK
+        varchar username UK
+        varchar password_hash
+        enum    role
+        varchar guest_type
+        tinyint is_active
+        char    signature
+    }
+
+    AUTH_SESSION {
+        bigint  session_id PK
+        bigint  user_id FK
+        char    token_hash UK
+        timestamp issued_at
+        datetime  expires_at
+        datetime  revoked_at
+    }
+
+    AUDIT_LOG_INDEX {
+        bigint  log_id PK
+        varchar actor
+        varchar role
+        varchar table_name
+        enum    action
+        varchar target_pk
+        int     affected_rows
+        varchar log_file
+        bigint  file_offset
+        timestamp ts
+    }
