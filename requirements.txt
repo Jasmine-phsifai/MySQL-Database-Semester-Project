@@ -1,0 +1,18 @@
+# 学生成绩数据库系统 — Python 依赖
+# 由 install.bat 经清华镜像一键安装
+# 兼容 Python 3.12+
+
+PyQt6>=6.5
+PyQt6-Qt6>=6.5
+PyQt6-sip>=13.5
+
+PyMySQL>=1.1
+bcrypt>=4.0
+
+pandas>=2.0
+openpyxl>=3.1
+
+Faker>=20.0
+pdfplumber>=0.10
+
+pyqtdarktheme>=2.1
