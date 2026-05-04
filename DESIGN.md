@@ -149,17 +149,18 @@
 - 键盘快捷键: Ctrl+E ER 图; F5 刷新当前表; Ctrl+Q 退出
 - 启动自检: MySQL 端口 ping; admin 账户首次自动初始化
 
-### 5.2 计划 (M2)
+### 5.2 已实现 (M2)
 
-- 表格双击编辑 + 黄色脏单元格 + QUndoStack 撤销/恢复
-- 「保存」按钮 = 一次事务批量提交; 提交后清栈
-- 关闭/切页前未保存改动弹窗确认
-- 乐观锁 (UPDATE ... WHERE pk=? AND updated_at=?)
-- 崩溃保护: dirty 周期 dump 到 logs/autosave/
-- CSV / XLSX / Markdown 三向导入 (字段映射 + 错误行高亮 + 阻止关闭)
-- 自定义 SQL 控制台 (viewer 仅 SELECT, editor 禁 DROP/TRUNCATE)
-- 操作日志查询界面
-- ER 图润色版回灌
+- 表格双击编辑 + 黄色脏单元格 + QUndoStack 撤销/恢复 (Ctrl+Z/Y)
+- 「保存 Ctrl+S」按钮 = 一次事务批量提交; 提交后清栈
+- 切页/关闭前若 dirty>0 弹窗 (保存/丢弃/取消)
+- 新增按钮: ColSpec 驱动表单 (enum→QComboBox, fk→下拉加载选项, 日期→QDateEdit)
+- 删除按钮: 软删 (status=0); 无 status 字段则物理删
+- CSV / XLSX 导入向导 (列名匹配 + 必填校验 + 事务批量); 导出双向
+- 自定义 SQL 控制台 Ctrl+L: admin 全权, editor 禁 DROP/TRUNCATE/GRANT/REVOKE, viewer 仅 SELECT
+- 操作日志查询页: 按 actor/table/action/时间窗 + admin 可查全部 / 其他仅自己
+- ER 图润色版自动回灌 (`schema_polished.png` 存在则优先加载)
+- 真实课程数据导入器 `tools/import_md_table.py`: 解析"_识别.md", 自动建 dept/teacher/course/offering/offering_teacher 并标 `data_origin='imported'`
 
 ### 5.3 计划 (M3)
 

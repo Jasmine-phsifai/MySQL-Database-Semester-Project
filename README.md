@@ -3,7 +3,17 @@
 复旦《数据库及实现》课程项目 (题目四). MySQL 8 + Python 3.12 + PyQt6 桌面应用.
 
 满足 3NF; 含完整性约束 (实体 / 参照 / CHECK); JSON 操作日志; bcrypt+HMAC 凭据;
-ER 图独立弹窗; 18 张业务表 + 1 张元数据表全部可浏览.
+ER 图独立弹窗; 18 业务表 + 1 元数据表全部可浏览/编辑/导入导出.
+
+**M2 已实现**:
+- 表格双击编辑 + 黄色脏单元格 + 撤销/恢复 (Ctrl+Z/Y)
+- 「保存 Ctrl+S」一次事务批量提交; 失败全部回滚
+- 切页/退出前未保存改动弹窗
+- 新增 (按 ColSpec 渲染表单含 FK 下拉) / 删除 (软删 status=0)
+- CSV/XLSX 导入向导 (字段映射 + 预检 + 事务提交) / 导出
+- 自定义 SQL 控制台 (Ctrl+L); admin 全权 / editor 禁 DROP+TRUNCATE / viewer 仅 SELECT
+- 操作日志查询页 (按 actor/table/action/时间窗筛选)
+- 真实课程数据导入: `tools/import_md_table.py` 解析 PDF→识别 md, 灌入 641 课程 / 1378 开课 / 729 教师 / 48 院系
 
 ## 一键启动
 
